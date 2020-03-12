@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     TextView name1, name2, name3, name4,
             data1, data2, data3, data4,status;
 
-    HashMap<String, ObjectOutputStream>
+    public static HashMap<String, ObjectOutputStream>
             maps = new HashMap<String,ObjectOutputStream>();
-    HashMap<String, String>
+    public static HashMap<String, String>
             ids = new HashMap<String, String>();
 
     ArrayAdapter<String> adapter;
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class Sender extends Thread{
+    public static class Sender extends Thread{
         Msg msg;
         public Sender(Msg msg) {
             this.msg = msg;
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class Sender2 extends Thread{
+    public static class Sender2 extends Thread{
         Msg msg;
         public Sender2(Msg msg) {
             this.msg = msg;
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void sendMsg(Msg msg) {
+    public static void sendMsg(Msg msg) {
         String tid = msg.getTid();
 
         if(tid == null || tid.equals("")) {
@@ -325,8 +325,7 @@ public class MainActivity extends AppCompatActivity {
     public void ckbt(View v){
         Msg msg = null;
         if(v.getId() == R.id.button){
-
-                    msg = new Msg("server","1",null);
+            msg = new Msg("server","1",null);
 
 
         }else if(v.getId() == R.id.button2){
