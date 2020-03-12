@@ -1,9 +1,6 @@
-package com.example.adminapp;
+package com.example.tabserver;
 
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,7 +42,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
+        String dev;
+        String controller;
+
+        dev = remoteMessage.getNotification().getTitle();
+        controller = remoteMessage.getNotification().getBody();
+
+        Log.d("===", "device : " + dev + " controller : " + controller);
+
+
     }
 
     public static String getToken(Context context) {
