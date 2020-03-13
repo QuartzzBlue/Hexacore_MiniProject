@@ -44,14 +44,14 @@ public class ProductController {
 //		return mv;
 //	}
 	
-	// Pad ¿¡¼­ ¹Þ¾Æ¼­ Browser¿¡ Display
+	// Pad ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ Browserï¿½ï¿½ Display
 	// App notification
 	String temp = "";
 	@RequestMapping("/httpconnection.mc")
 	@ResponseBody
 	public void plist(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
-		// Pad ¿¡¼­ ¹Þ¾Æ¼­ Browser¿¡ Display
+		// Pad ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ Browserï¿½ï¿½ Display
 		Msg msg = null;
 		String id = request.getParameter("id");
 		String txt = request.getParameter("txt");
@@ -69,11 +69,11 @@ public class ProductController {
 		conn.setDoOutput(true);
 
 		conn.setRequestProperty("Authorization", "key="
-				+ "AAAAkrZviEI:APA91bF2uQpFdLDwapUtPMhXvmYCOcAg-fDOMkdUJSGVJky5DDOyXjoP4GeO_8cPuNaNNg_yiJ-bBTAlHnqTTAK0Vql2UhawqAcJ9jejEtfMp4HLblYbv7Enwv_X7pnDsUuAKmlq5cmW");
+				+ "ì„œë²„í‚¤ìž…ë ¥");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
-		json.put("to","dG5t9CSIHaM:APA91bHbhlLdobwmigpimMMdo2zgPZuP9g56yb1UnJEcnvh1lgvGNdDHdOwDfpwgJFR2K-45zKN6lW0YiqBaBsvWVdMJwfMHD-BetFnloHJEq6EGCUUnWqnQAeG5x-1AD0uhOY7SCLcL");
+		json.put("to","Appí† í°ê°’ìž…ë ¥");
 
 		JSONObject info = new JSONObject();
 		info.put("title", id);
@@ -85,7 +85,6 @@ public class ProductController {
 		out.write(json.toString());
 		out.flush();
 		conn.getInputStream();
-
 		return;
 	}
 	
@@ -103,7 +102,7 @@ public class ProductController {
 	public String paddimpl(ModelAndView mv,
 			HttpServletRequest request) throws Exception {
 		System.out.println("webapp.mc");
-		//briwser/app -> tcpipserver
+		//browser/app -> tcpipserver
 		Socket socket;
 		boolean flag = false;
 		Client client = null;
@@ -126,6 +125,7 @@ public class ProductController {
 		
 		new Thread(client.sender).start();
 		
+
 		//browser/app -> Pad notification
 		URL url = new URL("https://fcm.googleapis.com/fcm/send");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -135,11 +135,11 @@ public class ProductController {
 		conn.setDoOutput(true);
 
 		conn.setRequestProperty("Authorization", "key="
-				+ "AAAAkrZviEI:APA91bF2uQpFdLDwapUtPMhXvmYCOcAg-fDOMkdUJSGVJky5DDOyXjoP4GeO_8cPuNaNNg_yiJ-bBTAlHnqTTAK0Vql2UhawqAcJ9jejEtfMp4HLblYbv7Enwv_X7pnDsUuAKmlq5cmW");
+				+ "ì„œë²„í‚¤ê°’");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
-		json.put("to","e3am97uVKPw:APA91bGfjp0s2QvYn8s7FhyyRtjhXxH3KrfbHz5lTxGCeTNQxo4A5nG8Dm52RNemxzFtLuej-5BmhAHqB04jzz_qZlyH6ca1lzo7jFVr01OTIJcvqsvRYXCYpsY0dzTM8OCfWbRBtf-r");
+		json.put("to","Pad");
 
 		JSONObject info = new JSONObject();
 		info.put("title", ip);
