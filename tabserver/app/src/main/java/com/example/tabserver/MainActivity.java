@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class Sender extends Thread{
+    class Sender extends Thread{
         Msg msg;
         public Sender(Msg msg) {
             this.msg = msg;
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class Sender2 extends Thread{
+    class Sender2 extends Thread{
         Msg msg;
         public Sender2(Msg msg) {
             this.msg = msg;
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.113.195/Network_Web/httpconnection.java";
+        String urlstr = "http://70.12.113.200/AdminWeb/httpconnection.mc";
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void sendMsg(Msg msg) {
+    public void sendMsg(Msg msg) {
         String tid = msg.getTid();
 
         if(tid == null || tid.equals("")) {
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     //------------------------Client---------------from TCP/IP Server////////////////////////////////
 
     String tabid = "tab1";
-    String sip = "70.12.113.195"; //웹서버의 ip
+    String sip = "70.12.113.200"; //웹서버의 ip
     int sport = 8888;
 
     Socket ssocket;
