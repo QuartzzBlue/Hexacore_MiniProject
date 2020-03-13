@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     TextView name1, name2, name3, name4,
             data1, data2, data3, data4,status;
 
-    HashMap<String, ObjectOutputStream>
+    public static HashMap<String, ObjectOutputStream>
             maps = new HashMap<String,ObjectOutputStream>();
-    HashMap<String, String>
+    public static HashMap<String, String>
             ids = new HashMap<String, String>();
 
     ArrayAdapter<String> adapter;
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.113.195/Network_Web/httpconnection.java";
+        String urlstr = "http://70.12.113.200/AdminWeb/httpconnection.mc";
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
@@ -325,8 +325,7 @@ public class MainActivity extends AppCompatActivity {
     public void ckbt(View v){
         Msg msg = null;
         if(v.getId() == R.id.button){
-
-                    msg = new Msg("server","1",null);
+            msg = new Msg("server","1",null);
 
 
         }else if(v.getId() == R.id.button2){
@@ -340,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     //------------------------Client---------------from TCP/IP Server////////////////////////////////
 
     String tabid = "tab1";
-    String sip = "70.12.113.195"; //웹서버의 ip
+    String sip = "70.12.113.200"; //웹서버의 ip
     int sport = 8888;
 
     Socket ssocket;

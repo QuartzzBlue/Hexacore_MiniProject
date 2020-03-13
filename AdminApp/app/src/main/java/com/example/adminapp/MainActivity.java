@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.113.200/Network_Web/webapp";
+        String urlstr = "http://70.12.113.200/AdminWeb/webapp.mc";
 
         public SendServer(String id, String txt) {
             urlstr += "?ip=" + id + "&txt=" + txt;

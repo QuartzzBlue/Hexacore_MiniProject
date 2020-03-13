@@ -111,32 +111,10 @@ footer{
 </head>
 <body>
 <header>
-	<ul id="top_nav">
-<c:choose>
-	<c:when test="${loginid == null }">
-		<li><a href="login.mc">LOGIN</a></li>
-		<li><a href="#">REGISTER</a></li>
-		<li><a href="#">ABOUT US</a></li>
-	</c:when>
-	<c:otherwise>
-		<li>${loginid }님</li>
-		<li><a href="logout.mc">LOGOUT</a></li>
-		<li><a href="#">ABOUT US</a></li>
-	</c:otherwise>
-</c:choose>
 
-	
-	</ul>
 	<hgroup>
-		<h1>Web Client App</h1>
-		<h3>HTML5 & CSS3.0 & JavaScript</h3>
+		<h1>Network Web Server</h1>
 	</hgroup>
-	<ul id="main_nav">
-		<li><a href="uadd.mc">ADD</a></li>
-		<li><a href="ulist.mc">LIST</a></li>
-		<li><a href="productadd.mc">PADD</a></li>
-		<li><a href="httpconnection.mc">Data</a></li>
-	</ul>
 </header>
 <nav><a href="index.html">HOME</a></nav>
 <section>

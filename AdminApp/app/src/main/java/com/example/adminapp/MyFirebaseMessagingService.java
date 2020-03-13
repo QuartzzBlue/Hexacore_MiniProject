@@ -35,7 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         String token = task.getResult().getToken();
 
                         // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
+                        String msg = "Instanced ID : " + token;
                         Log.d("===", msg);
                         Toast.makeText(MyFirebaseMessagingService.this, msg, Toast.LENGTH_SHORT).show();
                     }
