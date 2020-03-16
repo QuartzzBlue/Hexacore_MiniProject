@@ -28,7 +28,7 @@ public class Server {
 	HashMap<String, ObjectOutputStream> maps = new HashMap<>();
 	ServerSocket serverSocket;
 	boolean aflag = true;
-	String tapip = "/70.12.226.134";
+	String tapip = "/70.12.227.232";
 
 	public ArrayList<String> convert(HashMap<String, ObjectOutputStream> sendMaps) {
 		Set<String> keys = sendMaps.keySet();
