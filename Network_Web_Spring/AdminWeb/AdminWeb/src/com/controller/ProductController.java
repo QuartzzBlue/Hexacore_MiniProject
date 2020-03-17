@@ -63,12 +63,12 @@ public class ProductController {
 		conn.setDoOutput(true);
 
 		conn.setRequestProperty("Authorization", "key="
-				+ "AAAAkrZviEI:APA91bF2uQpFdLDwapUtPMhXvmYCOcAg-fDOMkdUJSGVJky5DDOyXjoP4GeO_8cPuNaNNg_yiJ-bBTAlHnqTTAK0Vql2UhawqAcJ9jejEtfMp4HLblYbv7Enwv_X7pnDsUuAKmlq5cmW");
+				+ "서버 키값 넣으시오");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
 		json.put("to",
-				"dG5t9CSIHaM:APA91bHbhlLdobwmigpimMMdo2zgPZuP9g56yb1UnJEcnvh1lgvGNdDHdOwDfpwgJFR2K-45zKN6lW0YiqBaBsvWVdMJwfMHD-BetFnloHJEq6EGCUUnWqnQAeG5x-1AD0uhOY7SCLcL");
+				"키 값을 넣으시오");
 
 		JSONObject info = new JSONObject();
 		info.put("title", id);
@@ -109,13 +109,13 @@ public class ProductController {
 		conn.setDoOutput(true);
 
 		conn.setRequestProperty("Authorization", "key="
-				+ "AAAAkrZviEI:APA91bF2uQpFdLDwapUtPMhXvmYCOcAg-fDOMkdUJSGVJky5DDOyXjoP4GeO_8cPuNaNNg_yiJ-bBTAlHnqTTAK0Vql2UhawqAcJ9jejEtfMp4HLblYbv7Enwv_X7pnDsUuAKmlq5cmW");
+				+ "서버키값 넣으시오");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
 		json.put("to",
-				"du5CYdNW4A4:APA91bGZ_zaLBmH-7mpdQkiaLBrAjttRh2m_m62zEek99-WLX6AKR-txi_K4-bmp2K0fS7vknM8xxc9OxqgvCWitIApIZScu3Bh4fy9KkKdztlcMo_GqcAb1I1Eu8jlHNx7a3-c8RFDK");
-
+				"키값을 넣으시오");
+		
 		JSONObject info = new JSONObject();
 		info.put("title", ip);
 		info.put("body", txt);
@@ -132,7 +132,7 @@ public class ProductController {
 		Socket socket;
 		Client client = null;
 		String cid = "WebServer";
-		String address = "70.12.113.230";
+		String address = "13.209.113.212";
 		int port = 8888;
 		try {
 			client = new Client(address, port);
