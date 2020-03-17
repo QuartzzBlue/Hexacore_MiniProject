@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     //------------------------Client---------------from TCP/IP Server////////////////////////////////
 
     String tabid = "tab1";
-    String sip = "70.12.113.200"; //웹서버의 ip
+    String sip = "70.12.113.230"; //웹서버의 ip
     int sport = 8888;
 
     Socket ssocket;
@@ -503,13 +503,21 @@ public class MainActivity extends AppCompatActivity {
 
          String tip = values[0].getTid();
          tid = ids.get(tip);
-         msg = new Msg("server",values[0].getTxt(),tid);
+         msg = new Msg("server",values[0].getTxt(), tid);
          sendMsg(msg);
 
+//         if(tip.equals("ERROR_NotProperIp")){
+//             status.setText("해당하는 IP가 없어 명령을 수행할 수 없습니다." + "\n"+status.getText());
+//
+//         }else
          if(tid==null||tid.equals("")){
-                 tid = "All";
+             tid = "All";
+             status.setText(tid+" : "+state + "\n"+status.getText());
+         }else{
+             status.setText(tid+" : "+state + "\n"+status.getText());
          }
-         status.setText(tid+" : "+state + "\n"+status.getText());
+
+
 
         }
     }

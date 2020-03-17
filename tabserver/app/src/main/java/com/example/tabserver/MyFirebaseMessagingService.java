@@ -1,10 +1,14 @@
 package com.example.tabserver;
 
-import android.content.Context;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,44 +52,57 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        String dev;
-        String controller;
-        Msg msg;
-        dev = remoteMessage.getNotification().getTitle();
-        controller = remoteMessage.getNotification().getBody();
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        NotificationManagerCompat notificationManager;
 
-        Log.d("===", "device IP : " + dev + " controller : " + controller);
+        String title, msg;
+        Msg msgToDev;
 
-        if(dev == null || dev.equals("")){
-            msg = new Msg("System",controller,null);
-        }else{
-            msg = new Msg("System", controller, dev);
+        title = remoteMessage.getNotification().getTitle();
+        msg = remoteMessage.getNotification().getBody();
+
+        Log.d("===", "device IP : " + title + " controller : " + msg);
+
+        String channelId = "channel";
+        String channelName = "Channel_name";
+
+        int importance = NotificationManager.IMPORTANCE_LOW;
+
+        notificationManager = NotificationManagerCompat.from(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
         }
-        sendMsg(msg);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.msgicon)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setAutoCancel(true)
+                .setVibrate(new long[]{1, 1000});
 
 
-    }
 
-    public static String getToken(Context context) {
-        return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty");
-    }
-
-    public void sendMsg(Msg msg) {
-        String tid = msg.getTid();
-
-        if(tid == null || tid.equals("")) {
-            Sender sender =
-                    new Sender(msg);
+        if(title == null || msg.equals("")){
+            msgToDev = new Msg("System",msg,null);
+            Sender sender = new Sender(msgToDev);
             sender.start();
-        }else {
-            Sender2 sender2 =
-                    new Sender2(msg);
-
+        }else{
+            msgToDev = new Msg("System",msg,title);
+            Sender2 sender2 =new Sender2(msgToDev);
             sender2.start();
         }
 
-    } // end sendMsg
+
+        notificationManager.notify(0, mBuilder.build());
+
+    }
+//
+//    public static String getToken(Context context) {
+//        return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty");
+//    }
+
     class Sender extends Thread{
         Msg msg;
         public Sender(Msg msg) {
@@ -100,6 +117,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     its = cols.iterator();
             while(its.hasNext()) {
                 try {
+                    Log.d("===", "sender");
                     its.next().writeObject(msg);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -118,18 +136,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         public void run() {
             String tid = msg.getTid();
             try {
+                Log.d("===", "sender1");
                 Collection<String>
                         col = MainActivity.ids.keySet();
                 Iterator<String> it = col.iterator();
                 String sip = "";
                 while(it.hasNext()) {
+                    Log.d("===", "sender2");
                     String key = it.next();
                     if(MainActivity.ids.get(key).equals(tid)) {
                         sip = key;
                     }
+                    Log.d("===", "sender3");
                 }
-                System.out.println(sip);
-                MainActivity.maps.get(sip).writeObject(msg);
+                Log.d("===", "sender4");
+                Log.d("===", sip);
+                if(!sip.equals("")) {
+                    MainActivity.maps.get(sip).writeObject(msg);
+                }else{
+                    
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
