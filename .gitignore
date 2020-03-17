@@ -97,4 +97,5 @@ local.properties
 .externalNativeBuild
 .cxx
 .metadata
+/Network_Client/.metadata
 google-services.json
