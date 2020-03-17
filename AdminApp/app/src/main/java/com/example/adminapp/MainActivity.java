@@ -31,28 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         state = findViewById(R.id.state);
-        connbt = findViewById(R.id.connbt);
         sendbt = findViewById(R.id.sendbt);
-        disconnbt=findViewById(R.id.disconnbt);
         tip = findViewById(R.id.targetip);
         control = findViewById(R.id.control);
-
-        sendbt.setEnabled(false);
-
-        connbt.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                if(temp==null) {
-                    Log.v("===","onclicked");
-                    temp = new SendServer("AdminApp","connected");
-                    temp.start();
-                    Log.v("===","temp started");
-                }
-            }
-        });
-
-
 
         sendbt.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -66,24 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        disconnbt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-               if(temp!=null){
-                   Log.v("===","disconn interrupted");
-       /*            temp = new SendServer("AdminApp","disconnected");
-                   temp.start();*/
-                   temp.interrupt();
-                   temp = null;
-                   state.setText("Disconnected");
-                   sendbt.setEnabled(false);
-               }
-
-            }
-        });
-
-
 
 
     }
@@ -115,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             state.setText(WebServer+" 접속 성공!");
-                            sendbt.setEnabled(true);
                         }
                     });
                 }
@@ -141,18 +103,15 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     state.setText(WebServer+" 접속 성공!");
-                                    sendbt.setEnabled(true);
                                 }
                             });
                             break;
                         }
                     }catch(Exception e1){ }
                 }
+
             }
 
-
-
-//            Toast.makeText(MainActivity.this, "Web Server 접속 성공!", Toast.LENGTH_SHORT).show();
 
         }
     }
