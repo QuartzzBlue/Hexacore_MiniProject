@@ -492,7 +492,7 @@ public class MainActivity extends AppCompatActivity {
 
          Msg msg = null;
          String state;
-         String tid ;
+         String tid =null;
          if (values[0].getTxt().equals("1")){
              state = "Started";
          }else if (values[0].getTxt().equals("0")) {
@@ -500,22 +500,27 @@ public class MainActivity extends AppCompatActivity {
          }else{
              state = "Error";
          }
-
          String tip = values[0].getTid();
-         tid = ids.get(tip);
-         msg = new Msg("server",values[0].getTxt(), tid);
-         sendMsg(msg);
 
-//         if(tip.equals("ERROR_NotProperIp")){
-//             status.setText("해당하는 IP가 없어 명령을 수행할 수 없습니다." + "\n"+status.getText());
-//
-//         }else
-         if(tid==null||tid.equals("")){
-             tid = "All";
-             status.setText(tid+" : "+state + "\n"+status.getText());
-         }else{
-             status.setText(tid+" : "+state + "\n"+status.getText());
+         if(tip==null||tip.equals("")||ids.containsKey(tip)){ //전체 메세지, 귓속말
+             tid = ids.get(tip);
+
+             msg = new Msg("server",values[0].getTxt(), tid);
+
+             sendMsg(msg);
+
+             if(tid==null||tid.equals("")){
+                 tid = "All";
+                 status.setText(tid+" : "+state + "\n"+status.getText());
+             }else{
+                 status.setText(tid+" : "+state + "\n"+status.getText());
+             }
+
+         }else{ //AdminApp에서 입력한 ip값이 정확하지 않은 경우
+             status.setText("해당하는 IP가 없어 명령을 수행할 수 없습니다." + "\n"+status.getText());
          }
+
+
 
 
 
