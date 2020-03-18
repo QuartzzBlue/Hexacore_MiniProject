@@ -203,7 +203,11 @@ public class Server {
 				}else{
 					System.out.println("All control : " + msg.getTxt());
 				}
-				maps.get(tapip).writeObject(msg);
+				if(maps.containsKey(tapip))
+					maps.get(tapip).writeObject(msg);
+				else {
+					System.out.println("탭서버(" + tapip + ") 에 연결 되어 있지 않습니다.");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
