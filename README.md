@@ -19,9 +19,9 @@
 
 ## 2. 프로젝트 환경
 
-## 3. 시스템 구성도
+## 3. 시스템 구성도  
 
-![image-20200310113534302](https://github.com/yeojini/Hexacore/blob/master/IMG/structure.png)  
+![image-20200319144720249](C:\Users\student\AppData\Roaming\Typora\typora-user-images\image-20200319144720249.png)
 
 ## 제작자
 
