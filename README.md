@@ -22,7 +22,7 @@
 ## 3. 시스템 구성도  
 
 ![structure2](C:\Hexacore_MiniProject\IMG\structure2.jpg)
-![structure2](.\IMG\structure2.jpg)
+![structure2](IMG\structure2.jpg)
 
 ## 제작자
 
