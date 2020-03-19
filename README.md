@@ -21,7 +21,7 @@
 
 ## 3. 시스템 구성도  
 
-![image-20200319144720249](C:\Users\student\AppData\Roaming\Typora\typora-user-images\image-20200319144720249.png)
+![structure2](C:\Hexacore_MiniProject\IMG\structure2.jpg)
 
 ## 제작자
 
