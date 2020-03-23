@@ -11,7 +11,7 @@
 ## 3. 시스템 구성도  
 
 
-![structure2](./IMG/structure2.jpg)
+![structure](./IMG/structure.png)
 ![structure](./IMG/stack2.png)
 
 ## 4. 기능 구현
