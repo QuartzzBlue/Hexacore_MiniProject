@@ -1,27 +1,13 @@
 # CAN을 이용한 차량 실내환경 실시간 모니터링 시스템
 > 멀티캠퍼스 Hexacore 팀 : 강동욱 김연주 백대현 이슬 전국현 최여진
 
-
-
-- Client : Pad 에서 Start 버튼 누르면 Receiver Thread 에서 1 수신해 Sender Thread 로 난수 생성해 msg 객체에 담아 전송
-- Pad : Client 에서 수신한 난수를 display 하고, TCP/IP 서버(Server.java)에 접속. TCP/IP 서버로부터 Web 에서 받아온 Msg 객체 Receive. tid  null 이면 Sender1 Thread 생성되어 접속한 모든 Client 를 제어합니다. null 이 아니면 tid 의 값에 따라 특정 Client 를 제어합니다.
-- TCP/IP Server : TCP/IP Client 로부터 수신받은 msg 객체를 Pad 로 전송
-- main.jsp : target IP, 제어자 (0/1) 을 입력받는 form.
-- WebAppServlet: main.jsp 로부터 target ip, 제어자가 담긴 msg 객체를 Sender Thread 로 Tcp/ip 서버로 전송하는 Tcp/ip Client 역할
-- TCP/IP Client ->TCP/IP Server : msg 객체 전송, Tcp/ip Server 는 받은 msg 객체를 Pad 로 Send
-- TCP/IP Server -> Pad : Pad 는 받은 msg 객체의 txt 를 추출해 Client의 on/off 제어할 수 있다.
-
-
-
-
-
 ## 1. 프로젝트 개요
 차량 기술이 발전함에 따라 차량 내부의 센서들이 늘어나고 있으며, 또한 차량 내부 센서 간 통신에 활용되는 CAN 통신에 대한 관심도 함께 높아지고 있다. 이 센서들 중 차량에서 운전자의 주행환경을 결정 짓는 것 중 하나가 차량 내부의 온도 및 습도이다. 이 온도와 습도에 대한 관계를 명확히 규명하면 제어 변수를 줄일 수 있다. 따라서 이번 세미 프로젝트에서는 차량 내 온도 및 습도의 실시간 모니터링을 통해 항상 최적의 운전자 주행환경을 유지하는 것을 목표로 한다.
 이를 통해 CAN을 이용한 차량 실내환경 실시간 모니터링 시스템 구축 및 설계한다.
 
 ## 2. 프로젝트 환경
 
-![stack](./IMG/stack.jpg)
+![stack](./IMG/stack.PNG)
 
 ## 3. 시스템 구성도  
 
