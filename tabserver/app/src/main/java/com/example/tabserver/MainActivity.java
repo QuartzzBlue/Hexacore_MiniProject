@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ServerSocket serverSocket;
     boolean aflag = true;
     int port = 8888;
+    String FLid = "FL01";
 
 
     @Override
@@ -118,26 +119,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public void displayData(final Msg msg){
 
                 if(msg.getId().equals("Device1")) {
-                    name1.setText(msg.getId());
+
                     data1.setText(msg.getTxt());
                 }
                 if (msg.getId().equals("Device2")){
-                    name2.setText(msg.getId());
+
                     data2.setText(msg.getTxt());
                 }
                 if (msg.getId().equals("Device3")){
-                    name3.setText(msg.getId());
                     data3.setText(msg.getTxt());
                 }
                 if (msg.getId().equals("Device4")){
-                    name4.setText(msg.getId());
+
                     data4.setText(msg.getTxt());
                 }
 
-        new SendServer(msg.getId(),msg.getTxt()).start();
+                new SendServer(msg.getId(),msg.getTxt(),true).start();
+
 
     }
 
@@ -178,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
                     msg = (Msg) ois.readObject();
 
                     final Msg finalMsg = msg;
+                    Log.v("===",msg.getTxt());
+                    Log.v("===",msg.getId());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -268,10 +272,11 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.113.200/AdminWeb/httpconnection.mc";
+        //String urlstr = "http://13.209.113.212:8080/AdminWeb/httpconnection.mc";
+        String urlstr = "http://70.12.113.200/AdminWeb/httpconnection.mc"; //WebSer 의 ip
 
-        public SendServer(String id, String txt) {
-            urlstr += "?id=" + id + "&txt=" + txt;
+        public SendServer(String ecuid, String data,boolean state) {
+            urlstr += "?FLid="+FLid+"&ecuid=" + ecuid + "&data=" + data+"&state="+state;
         }
 
         @Override
@@ -318,18 +323,20 @@ public class MainActivity extends AppCompatActivity {
         data3 = findViewById(R.id.textView7);
         data4 = findViewById(R.id.textView8);
         status = findViewById(R.id.textView9);
+
         new ConnectThread(sip,port,null).start();
-        Log.d("------------","TCP/IP Connection start");
     }
 
     public void ckbt(View v){
         Msg msg = null;
         if(v.getId() == R.id.button){
             msg = new Msg("server","1",null);
+            status.setText("All : started\n"+status.getText());
 
 
         }else if(v.getId() == R.id.button2){
             msg = new Msg("server","0",null);
+            status.setText("All : stopped\n"+status.getText());
 
         }
         sendMsg(msg);
@@ -338,11 +345,15 @@ public class MainActivity extends AppCompatActivity {
 
     //------------------------Client---------------from TCP/IP Server////////////////////////////////
 
-    String tabid = "tab1";
-    String sip = "70.12.113.230"; //웹서버의 ip
+    //String sip = "13.209.113.212"; //웹서버의 ip
+    String sip = "70.12.113.200"; //웹서버의 ip
     int sport = 8888;
 
     Socket ssocket;
+
+
+
+
 
 //    @Override
 //    protected void onStart() {
@@ -368,6 +379,8 @@ public class MainActivity extends AppCompatActivity {
         String ip;
         int port;
         String id;
+        OutputStream os2;
+        ObjectOutputStream oos2;
 
         public ConnectThread(){
 
@@ -383,6 +396,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 ssocket.setSoTimeout(2000); //서버가 죽어있는데 찾고잇어서.. 2초동안 못찾으면 Exception
                 ssocket = new Socket(ip, port);
+                os2 = ssocket.getOutputStream();
+                oos2 = new ObjectOutputStream(os2);
+                oos2.writeObject(new Msg(FLid,null));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -404,6 +420,9 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Thread.sleep(1000);
                         ssocket = new Socket(ip, port);
+                        os2 = ssocket.getOutputStream();
+                        oos2 = new ObjectOutputStream(os2);
+                        oos2.writeObject(new Msg(FLid,null));
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -414,6 +433,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     } catch (Exception e1) {
                         //e1.printStackTrace();
+                        //new SendServer("0","0",false).start();
                     }
                 }
             }
@@ -470,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                     ssocket.close();
                 }
             }catch(Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
 
@@ -492,7 +512,6 @@ public class MainActivity extends AppCompatActivity {
 
          Msg msg = null;
          String state;
-         String tid =null;
          if (values[0].getTxt().equals("1")){
              state = "Started";
          }else if (values[0].getTxt().equals("0")) {
@@ -500,25 +519,37 @@ public class MainActivity extends AppCompatActivity {
          }else{
              state = "Error";
          }
-         String tip = values[0].getTid();
+         String tid = values[0].getId(); //ECU
 
-         if(tip==null||tip.equals("")||ids.containsKey(tip)){ //전체 메세지, 귓속말
-             tid = ids.get(tip);
 
-             msg = new Msg("server",values[0].getTxt(), tid);
+            msg = new Msg("server",values[0].getTxt(), tid);
+
+            new Sender(msg).start();
+
+            if(tid==null||tid.equals("")){
+                status.setText("ALL : "+state + "\n"+status.getText());
+            }else{
+                status.setText(tid+" : "+state + "\n"+status.getText());
+            }
+
+/*
+         if(tip==null||tip.equals("")||ids.containsValue(tip)){ //전체 메세지, 귓속말
+             //tid = ids.get(tip);
+
+             msg = new Msg("server",values[0].getTxt(), tip);
 
              sendMsg(msg);
 
-             if(tid==null||tid.equals("")){
-                 tid = "All";
-                 status.setText(tid+" : "+state + "\n"+status.getText());
+             if(tip==null||tip.equals("")){
+                 status.setText("ALL : "+state + "\n"+status.getText());
              }else{
-                 status.setText(tid+" : "+state + "\n"+status.getText());
+                 status.setText(tip+" : "+state + "\n"+status.getText());
              }
 
          }else{ //AdminApp에서 입력한 ip값이 정확하지 않은 경우
-             status.setText("해당하는 IP가 없어 명령을 수행할 수 없습니다." + "\n"+status.getText());
+             status.setText("해당하는 ECU가 없어 명령을 수행할 수 없습니다." + "\n"+status.getText());
          }
+*/
 
 
 

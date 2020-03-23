@@ -48,40 +48,42 @@ public class ProductController {
 	public void plist(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// Pad 에서 받아서 Browser에 Display
-		Msg msg = null;
-		String id = request.getParameter("id");
-		String txt = request.getParameter("txt");
-		
-		temp=id+" : "+txt;
-		
-		// App notification
-		URL url = new URL("https://fcm.googleapis.com/fcm/send");
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				String FLid = request.getParameter("FLid");
+				String ecuid = request.getParameter("ecuid");
+				String data = request.getParameter("data");
+				String state = request.getParameter("state").toString();
+				
+				//System.out.println("state : "+state);
+				temp=FLid+","+ecuid+","+data;
+				
+				// App notification
+				URL url = new URL("https://fcm.googleapis.com/fcm/send");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-		conn.setUseCaches(false);
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
+				conn.setUseCaches(false);
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
 
-		conn.setRequestProperty("Authorization", "key="
-				+ "서버 키값 넣으시오");
-		conn.setRequestProperty("Content-Type", "application/json");
+				conn.setRequestProperty("Authorization", "key="
+						+ " 서버키값 ");
+				conn.setRequestProperty("Content-Type", "application/json");
 
-		JSONObject json = new JSONObject();
-		json.put("to",
-				"키 값을 넣으시오");
+				JSONObject json = new JSONObject();
+				json.put("to",
+						"AdminApp 기기 토큰 값");
 
-		JSONObject info = new JSONObject();
-		info.put("title", id);
-		info.put("body", txt);
+				JSONObject info = new JSONObject();
+				info.put("title", FLid);
+				info.put("body", ecuid+" "+data);
 
-		json.put("notification", info);
+				json.put("notification", info);
 
-		OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-		out.write(json.toString());
-		out.flush();
-		conn.getInputStream();
+				OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+				out.write(json.toString());
+				out.flush();
+				conn.getInputStream();
 
-		return;
+				return;
 	}
 
 	@RequestMapping("/ReturnData.mc")
@@ -97,8 +99,9 @@ public class ProductController {
 	@ResponseBody
 	public String paddimpl(ModelAndView mv, HttpServletRequest request) throws Exception {
 
-		String ip = request.getParameter("ip");
-		String txt = request.getParameter("txt");
+		String FLid = request.getParameter("FLid");
+		String ecuid = request.getParameter("ecuid");
+		String data = request.getParameter("data");
 
 		// browser/app -> Pad notification
 		URL url = new URL("https://fcm.googleapis.com/fcm/send");
@@ -109,30 +112,30 @@ public class ProductController {
 		conn.setDoOutput(true);
 
 		conn.setRequestProperty("Authorization", "key="
-				+ "서버키값 넣으시오");
+				+ " 서버키값");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
 		json.put("to",
-				"키값을 넣으시오");
+				"Pad 기기 토큰값");
 		
 		JSONObject info = new JSONObject();
-		info.put("title", ip);
-		info.put("body", txt);
+		info.put("title", ecuid);
+		info.put("body", data);
 
 		json.put("notification", info);
 
 		OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
 		out.write(json.toString());
 		out.flush();
-		conn.getInputStream();
-		System.out.println("Sent to Firebase : "+ip+","+txt);
+		//conn.getInputStream();
+		System.out.println("Sent to Firebase : "+FLid+ ", " + ecuid +","+data);
 
 		// briwser/app -> tcpipserver
 		Socket socket;
 		Client client = null;
-		String cid = "WebServer";
-		String address = "13.209.113.212";
+		//String address = "13.209.113.212";
+		String address = "70.12.113.200"; // TCP/IP Server IP
 		int port = 8888;
 		try {
 			client = new Client(address, port);
@@ -140,11 +143,11 @@ public class ProductController {
 			e.printStackTrace();
 		}
 
-		Msg msg = new Msg(cid, txt, ip);
+		Msg msg = new Msg(ecuid, data, FLid);
 		client.setMsg(msg);
 
 		client.sender.setMsg(msg);
-		System.out.println("Sent to :"+address+" Msg Object : "+cid+","+txt+","+txt);
+		System.out.println("Sent to TCT/IP :"+address+" Msg Object :" + ecuid+","+ data+","+ FLid);
 
 		new Thread(client.sender).start();
 

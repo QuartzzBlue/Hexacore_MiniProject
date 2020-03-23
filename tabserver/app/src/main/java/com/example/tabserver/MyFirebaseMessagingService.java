@@ -86,14 +86,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if(title == null || msg.equals("")){
             msgToDev = new Msg("System",msg,null);
-            Sender sender = new Sender(msgToDev);
-            sender.start();
+
         }else{
             msgToDev = new Msg("System",msg,title);
-            Sender2 sender2 =new Sender2(msgToDev);
-            sender2.start();
         }
-
+//        Sender sender = new Sender(msgToDev);
+//        sender.start();
 
         notificationManager.notify(0, mBuilder.build());
 
@@ -127,39 +125,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    class Sender2 extends Thread{
-        Msg msg;
-        public Sender2(Msg msg) {
-            this.msg = msg;
-        }
-        @Override
-        public void run() {
-            String tid = msg.getTid();
-            try {
-                Log.d("===", "sender1");
-                Collection<String>
-                        col = MainActivity.ids.keySet();
-                Iterator<String> it = col.iterator();
-                String sip = "";
-                while(it.hasNext()) {
-                    Log.d("===", "sender2");
-                    String key = it.next();
-                    if(MainActivity.ids.get(key).equals(tid)) {
-                        sip = key;
-                    }
-                    Log.d("===", "sender3");
-                }
-                Log.d("===", "sender4");
-                Log.d("===", sip);
-                if(!sip.equals("")) {
-                    MainActivity.maps.get(sip).writeObject(msg);
-                }else{
-                    
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    class Sender2 extends Thread{
+//        Msg msg;
+//        public Sender2(Msg msg) {
+//            this.msg = msg;
+//        }
+//        @Override
+//        public void run() {
+//            String tid = msg.getTid();
+//            try {
+//                Log.d("===", "sender1");
+//                Collection<String>
+//                        col = MainActivity.ids.keySet();
+//                Iterator<String> it = col.iterator();
+//                String sip = "";
+//                while(it.hasNext()) {
+//                    Log.d("===", "sender2");
+//                    String key = it.next();
+//                    if(MainActivity.ids.get(key).equals(tid)) {
+//                        sip = key;
+//                    }
+//                    Log.d("===", "sender3");
+//                }
+//                Log.d("===", "sender4");
+//                Log.d("===", sip);
+//                if(!sip.equals("")) {
+//                    MainActivity.maps.get(sip).writeObject(msg);
+//                }else{
+//
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
