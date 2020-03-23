@@ -61,6 +61,8 @@ Web Server에서 Send 버튼을 누르면 Receiver Thread 내에서 TCP/IP Socke
 - 김연주
 - 백대현 
 - 이슬 
+  - Mail : seulee95@naver.com
+  - Github : https://github.com/QuartzzBlue
 - 전국현 
 - 최여진
   - Mail : who3637@naver.com
