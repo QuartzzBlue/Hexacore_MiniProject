@@ -30,47 +30,15 @@ header{
 	margin:0 auto;
 	width:600px;
 	height:150px;
-	background:red;
+	background:lightgrey;
 	position: relative;
 }
-#top_nav{
-	position: absolute;
-	top:0;
-	right:0;
-}
-#top_nav > li{
-	float:left
-}
-#top_nav > li > a{
-	font-size: 0.8em;
-	font-weight: bold;
-	margin:0 5px;
-}
-#top_nav > li > a:hover{
-	color: white;
-}
+
 header > hgroup{
 	position: absolute;
 	top:30px;
 	left:130px;
 	text-align: center;
-}
-#main_nav{
-	position: absolute;
-	bottom: 0;
-	left:100px;
-}
-#main_nav > li{
-	float:left
-}
-#main_nav > li > a{
-	color:blue;
-	font-size: 1.5em;
-	font-weight: bold;
-	margin:0 10px;
-}
-#main_nav > li > a:hover{
-	color: white;
 }
 /* Header CSS End   ******************/
 
@@ -89,18 +57,13 @@ section{
 	margin:0 auto;
 	width:600px;
 	height:350px;
-	background:gray;
+	background:white;
 }
 
 /* Section CSS End   ******************/
 
 /* Footer CSS Start ******************/
-footer{
-	margin:0 auto;
-	width:600px;
-	height:30px;
-	background:black;
-}
+
 /* Footer CSS End   ******************/
 
 
@@ -116,7 +79,6 @@ footer{
 		<h1>Network Web Server</h1>
 	</hgroup>
 </header>
-<nav><a href="index.html">HOME</a></nav>
 <section>
 	<c:choose>
 		<c:when test="${center == null }">

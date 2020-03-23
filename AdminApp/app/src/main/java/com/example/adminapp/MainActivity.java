@@ -2,29 +2,22 @@ package com.example.adminapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.HttpURLConnection;
-import java.net.Socket;
 import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity {
 
     TextView state;
-    EditText tip,control;
-    Button connbt,disconnbt,sendbt;
-    Thread temp;
+    EditText FLid,ecuid,data;
+    Button sendbt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
         state = findViewById(R.id.state);
         sendbt = findViewById(R.id.sendbt);
-        tip = findViewById(R.id.targetip);
-        control = findViewById(R.id.control);
+        FLid = findViewById(R.id.flid);
+        ecuid = findViewById(R.id.ecuid);
+        data = findViewById(R.id.control);
 
         sendbt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(control.getText().toString().equals("0")||control.getText().toString().equals("1")){
-                    new SendServer(tip.getText().toString(),control.getText().toString()).start();
+                if(data.getText().toString().equals("0")||data.getText().toString().equals("1")){
+                    new SendServer(FLid.getText().toString(),ecuid.getText().toString(),data.getText().toString()).start();
                 }else {
                     Toast.makeText(MainActivity.this, "유효한 Controller 를 입력해 주세요!", Toast.LENGTH_SHORT).show();
                 }
@@ -53,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        final String WebServer = "http://70.12.113.200/";
+        //final String WebServer = "http://13.209.113.212:8080/";
+        final String WebServer = "http://70.12.113.200/"; //Web Server 의 IP
         String urlstr = WebServer+"/AdminWeb/webapp.mc";
         URL url;
         HttpURLConnection con;
@@ -62,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public SendServer(String id, String txt) {
-            urlstr += "?ip=" + id + "&txt=" + txt;
+        public SendServer(String FLid,String ecuid, String data) {
+            urlstr += "?FLid="+FLid+"&ecuid=" + ecuid + "&data=" + data;
         }
 
         @Override
